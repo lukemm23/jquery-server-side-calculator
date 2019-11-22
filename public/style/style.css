@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+}
+
+.calc-interface {
+    text-align: center;
+    background-color: black;
+    width: 120px;
+    height: 120px;
+    padding: 10px;
+}
+
+#calculator-input {
+    height: 20px;
+    margin-bottom: 5px;
+    background-color: white;
+}
