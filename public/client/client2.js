@@ -1,46 +1,85 @@
 $(document).ready(init);
 
-const dataObj = [];
-
-let data1= $('.js-data-1').val();
-let data2= $('.js-data-2').val();
-let dataOperator;
-
 function init() {
     console.log('JQ!');
     $('.plus').on('click', onClickAdd);
     $('.minus').on('click', onClickMinus);
     $('.multiply').on('click', onClickMultiply);
     $('.divide').on('click', onClickDivide);
-    // $('.calculate').on('click', onClickCalculate);
+    $('.calculate').on('click', onClickCalculate);
+
+    // getAnswer();
 }
 
-function onClickAdd() {
-    //test
-    console.log('clicked add');
-    //add data1 into array
-    dataObj.push(data1);
-    //turn plus sign into string word
-    dataObj.push('add');
-    //display
-    $('.js-display').empty();
-    $('.js-display').append(`
-        <span>${data1}</span>
-        <span>${dataOperator}</span>
-        `);
-    console.log(dataObj);
-
-}
-console.log(dataObj);
-
-function onClickMinus() {
-    console.log('clicked minus');
+function onClickAdd(){
+    return true;
 }
 
-function onClickMultiply() {
-    console.log('clicked multiply');
+function onClickMinus(){
+    return true;
 }
 
-function onClickDivide() {
-    console.log('clicked divide');
+function onClickMultiply(){
+    return true;
+}
+
+function onClickDivide(){
+    return true;
+}
+
+function sign() {
+    if(onClickAdd){
+        return "add";
+    }else if (onClickMinus){
+        return "subtract";
+    }else if (onClickMultiply){
+        return "multiply";
+    }else if (onClickDivide){
+        return "divide";
+    }
+}
+
+function onClickCalculate() {
+    //prepare post package
+    const sendObj = {
+        data1: Number($('.js-data-1').val()),
+        data2: Number($('.js-data-2').val()),
+        dataOperator: sign(),
+    };
+    console.log(sendObj);
+    clearInput();
+    postObj(sendObj);
+}
+
+// function render(output) {
+//     const $output = $('.js-answer');
+
+//     $output.empty();
+//     $output.append(`
+//         ${output.answer}
+//     `);
+// }
+
+function clearInput() {
+    $('.js-data-1').val('');
+    $('.js-data-2').val('');
+}
+
+function postObj(answer) {
+    const data = {
+        answer: answer,
+    };
+    console.log(data);
+
+    $.ajax({
+        method: 'POST',
+        url: '/api/result',
+        data: data,
+    })
+    .then(function(response) {
+        console.log(response);
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
 }
