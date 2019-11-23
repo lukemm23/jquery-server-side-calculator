@@ -9,9 +9,25 @@ function init() {
     $('.multiply').on('click', onClickMultiply);
     $('.divide').on('click', onClickDivide);
     $('.calculate').on('click', onClickCalculate);
-
-    // getAnswer();
+    $('.clear').on('click', clearInput);
+    
+    gethistory();
 }
+
+function gethistory() {
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:5000/api/history',
+    })
+    .then(function(response) {
+        console.log('GET Response: ', response);
+        render(response);
+    })
+    .catch(function(err) {
+        console.log('GET Error: ', err);
+    });
+}
+
 function onClickAdd(){
     sign('add');
 }
@@ -46,14 +62,14 @@ function onClickCalculate() {
     postObj(sendObj);
 }
 
-// function render(output) {
-//     const $output = $('.js-answer');
+function render(output) {
+    const $output = $('.js-answer');
 
-//     $output.empty();
-//     $output.append(`
-//         ${output.answer}
-//     `);
-// }
+    $output.empty();
+    $output.append(`
+        ${output.result}
+    `);
+}
 
 function clearInput() {
     $('.js-data-1').val('');
@@ -67,10 +83,12 @@ function postObj(answer) {
 
     $.ajax({
         method: 'POST',
-        url: 'http://localhost:5000/api/result',
+        url: '/api/result',
         data: data,
     })
     .then(function(response) {
+        render(response);
+        gethistory();
         console.log(response);
     })
     .catch(function(err) {

@@ -7,11 +7,11 @@ const bodyParser = require('body-parser');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
 
 app.post('/api/result', (req, res) => {
     console.log(req.body.data1, req.body.data2);
@@ -45,6 +45,16 @@ app.post('/api/result', (req, res) => {
         return result;
     }
 });
+
+// app.get('/api/history', (req, res) => {
+//     const dataArray = [];
+
+//        const data1 = dataArray.push(data1),
+//         data2 = dataArray.push(data2),
+//         dataOperator = dataArray.push(dataOperator),
+
+//     res.send(dataArray);
+// });
 
 app.listen(PORT, () => {
     console.log(`listening on port: ${PORT}`);
