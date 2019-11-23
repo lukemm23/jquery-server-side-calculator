@@ -1,7 +1,7 @@
 $(document).ready(init);
 
 let operator = null;
-
+//init clicks and gethistory
 function init() {
     console.log('JQ!');
     $('.plus').on('click', onClickAdd);
@@ -12,20 +12,6 @@ function init() {
     $('.clear').on('click', clearInput);
     
     gethistory();
-}
-
-function gethistory() {
-    $.ajax({
-        method: 'GET',
-        url: 'http://localhost:5000/api/history',
-    })
-    .then(function(response) {
-        console.log('GET Response: ', response);
-        render(response);
-    })
-    .catch(function(err) {
-        console.log('GET Error: ', err);
-    });
 }
 
 function onClickAdd(){
@@ -62,7 +48,7 @@ function onClickCalculate() {
     postObj(sendObj);
 }
 
-function render(output) {
+function renderAnswer(output) {
     const $output = $('.js-answer');
 
     $output.empty();
@@ -87,11 +73,32 @@ function postObj(answer) {
         data: data,
     })
     .then(function(response) {
-        render(response);
+        renderAnswer(response);
         gethistory();
         console.log(response);
     })
     .catch(function(err) {
         console.log(err);
     });
+}
+// get request
+function gethistory() {
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:5000/api/history',
+    })
+    .then(function(response) {
+        console.log('GET Response: ', response);
+        renderHistory(response);
+    })
+    .catch(function(err) {
+        console.log('GET Error: ', err);
+    });
+}
+
+//render history
+function renderHistory(data) {
+    $('.js-tracker').append(`
+        <li>${data.data1}${data.dataOperator}${data.data2}=</li>
+    `);
 }
