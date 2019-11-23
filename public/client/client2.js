@@ -1,5 +1,7 @@
 $(document).ready(init);
 
+let operator = null;
+
 function init() {
     console.log('JQ!');
     $('.plus').on('click', onClickAdd);
@@ -10,33 +12,26 @@ function init() {
 
     // getAnswer();
 }
-
 function onClickAdd(){
-    return true;
+    sign('add');
 }
 
 function onClickMinus(){
-    return true;
+    sign('subtract');
 }
 
 function onClickMultiply(){
-    return true;
+    sign('multiply');
 }
 
 function onClickDivide(){
-    return true;
+    sign('divide');
 }
 
-function sign() {
-    if(onClickAdd){
-        return "add";
-    }else if (onClickMinus){
-        return "subtract";
-    }else if (onClickMultiply){
-        return "multiply";
-    }else if (onClickDivide){
-        return "divide";
-    }
+
+
+function sign(x) {
+    operator = x;
 }
 
 function onClickCalculate() {
@@ -44,7 +39,7 @@ function onClickCalculate() {
     const sendObj = {
         data1: Number($('.js-data-1').val()),
         data2: Number($('.js-data-2').val()),
-        dataOperator: sign(),
+        dataOperator: operator,
     };
     console.log(sendObj);
     clearInput();
@@ -63,17 +58,16 @@ function onClickCalculate() {
 function clearInput() {
     $('.js-data-1').val('');
     $('.js-data-2').val('');
+    operator = null;
 }
 
 function postObj(answer) {
-    const data = {
-        answer: answer,
-    };
+    const data = answer;
     console.log(data);
 
     $.ajax({
         method: 'POST',
-        url: '/api/result',
+        url: 'http://localhost:5000/api/result',
         data: data,
     })
     .then(function(response) {
