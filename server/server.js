@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
-const model = require('/module/model');
+// const model = require('/module/model');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -12,19 +12,34 @@ app.post('/api/result', (req, res) => {
     const data1 = parseFloat(req.body.data1);
     const data2 = parseFloat(req.body.data2);
     const dataOperator = req.body.dataOperator;
+    let result;
+    console.log(result);
+
+    console.log(data1, data2, dataOperator);
     if( dataOperator == 'add' ) {
-       let result =  data1 + data2;
-       return result; 
+       result =  data1 + data2;
+       res.send(201);
+       console.log(result);
+       return result;
+       
     }else if ( dataOperator == 'subtract' ) {
-        let result = data1 - data2;
+        result = data1 - data2;
+        res.send(201);
+        console.log(result);
         return result;
     }else if ( dataOperator == 'multiply' ) {
-        let result = data1 * data2;
+        result = data1 * data2;
+        res.send(201);
+        console.log(result);
         return result;
     }else if ( dataOperator == 'divide' ) {
-        let result = data1 / data2;
+        result = data1 / data2;
+        res.send(201);
+        console.log(result);
         return result;
     }
-    res.send({result: result});
-    
+});
+
+app.listen(PORT, () => {
+    console.log(`listening on port: ${PORT}`);
 });
