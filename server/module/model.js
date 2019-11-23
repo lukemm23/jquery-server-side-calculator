@@ -1,8 +1,8 @@
 
 let dataArray = [
-    {firstNum: 'data1', 
-    secondNum: 'data2', 
-    operator: 'dataOperator'},
+    {data1: '1', 
+    data2: '2', 
+    dataOperator: 'add'},
 ]
 
 function addData(newData) {

@@ -39,12 +39,12 @@ app.post('/api/result', (req, res) => {
         console.log(result);
         return result;
     }
-    addData(newData);
+    model.addData(newData);
 });
 
 app.get('/api/history', (req, res) => {
        console.log('GET request for data.');
-       res.send(model.addData());
+       res.send(model);
 });
 
 app.listen(PORT, () => {

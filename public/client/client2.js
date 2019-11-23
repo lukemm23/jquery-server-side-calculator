@@ -96,6 +96,7 @@ function gethistory() {
     });
 }
 
+
 //render history
 function renderHistory(data) {
     $('.js-tracker').append(`
