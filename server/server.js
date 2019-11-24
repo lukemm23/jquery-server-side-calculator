@@ -14,37 +14,34 @@ app.post('/api/result', (req, res) => {
     const data2 = parseFloat(req.body.data2);
     const dataOperator = req.body.dataOperator;
     let result;
-    console.log(result);
     
     console.log(data1, data2, dataOperator);
     if( dataOperator == 'add' ) {
        result =  data1 + data2;
        res.send({result:result});
        console.log(result);
-       return result;
-       
     }else if ( dataOperator == 'subtract' ) {
         result = data1 - data2;
         res.send({result:result});
         console.log(result);
-        return result;
     }else if ( dataOperator == 'multiply' ) {
         result = data1 * data2;
         res.send({result:result});
         console.log(result);
-        return result;
     }else if ( dataOperator == 'divide' ) {
         result = data1 / data2;
         res.send({result:result});
         console.log(result);
-        return result;
     }
+    const newData = {data1, data2, dataOperator, result};
     model.addData(newData);
+    console.log('logging data:',model.data);
+    return;
 });
 
 app.get('/api/history', (req, res) => {
        console.log('GET request for data.');
-       res.send(model);
+       res.send(model.data);
 });
 
 app.listen(PORT, () => {

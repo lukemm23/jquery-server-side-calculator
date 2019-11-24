@@ -65,7 +65,6 @@ function clearInput() {
 
 function postObj(answer) {
     const data = answer;
-    console.log(data);
 
     $.ajax({
         method: 'POST',
@@ -96,10 +95,27 @@ function gethistory() {
     });
 }
 
+const operators = {
+    add: '+',
+    '+': 'add',
+    subtract: '-',
+    '-': 'subtract',
+    multiply: '*',
+    '*': 'multiply',
+    divide: '/',
+    '/': 'divide',
+  }
 
 //render history
 function renderHistory(data) {
-    $('.js-tracker').append(`
-        <li>${data.data1}${data.dataOperator}${data.data2}=</li>
-    `);
+    $('.js-tracker').empty();
+    for(let i = 0; i<data.length; i++) {
+        $('.js-tracker').append(
+            `
+            <li>${data[i].data1}
+             ${operators[data[i].dataOperator]}
+             ${data[i].data2} = ${data[i].result}</li>
+
+        `);
+    }
 }
