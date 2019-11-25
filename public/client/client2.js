@@ -14,6 +14,7 @@ function init() {
     gethistory();
 }
 
+//setting operator sign event handling
 function onClickAdd(){
     sign('add');
 }
@@ -36,6 +37,7 @@ function sign(x) {
     operator = x;
 }
 
+//event handling equal sign to take in values as one object
 function onClickCalculate() {
     //prepare post package
     const sendObj = {
@@ -48,6 +50,7 @@ function onClickCalculate() {
     postObj(sendObj);
 }
 
+//render answer
 function renderAnswer(output) {
     const $output = $('.js-answer');
 
@@ -57,6 +60,7 @@ function renderAnswer(output) {
     `);
 }
 
+//clear input button
 function clearInput() {
     $('.js-data-1').val('');
     $('.js-data-2').val('');
@@ -66,12 +70,14 @@ function clearInput() {
 function postObj(answer) {
     const data = answer;
 
+    // post request
     $.ajax({
         method: 'POST',
         url: '/api/result',
         data: data,
     })
     .then(function(response) {
+        //render answer
         renderAnswer(response);
         gethistory();
         console.log(response);
@@ -88,6 +94,7 @@ function gethistory() {
     })
     .then(function(response) {
         console.log('GET Response: ', response);
+        //render history
         renderHistory(response);
     })
     .catch(function(err) {
@@ -95,6 +102,7 @@ function gethistory() {
     });
 }
 
+//flipping string into operator signs
 const operators = {
     add: '+',
     '+': 'add',
@@ -108,7 +116,9 @@ const operators = {
 
 //render history
 function renderHistory(data) {
+    //empty history
     $('.js-tracker').empty();
+    // looping thru history array and displaying array objects
     for(let i = 0; i<data.length; i++) {
         $('.js-tracker').append(
             `
